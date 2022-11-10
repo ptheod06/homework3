@@ -116,7 +116,7 @@ func (s *Search) Nearby(ctx context.Context, req *pb.NearbyRequest) (*pb.SearchR
   		Lon:   req.Lon,
 	})
 	if err != nil {
-  		http.Error(w, err.Error(), http.StatusInternalServerError)
+  		//http.Error(w, err.Error(), http.StatusInternalServerError)
   	return
 	}
 
@@ -129,7 +129,7 @@ func (s *Search) Nearby(ctx context.Context, req *pb.NearbyRequest) (*pb.SearchR
 		OutDate: req.OutDate,
         })
         if err != nil {
-                http.Error(w, err.Error(), http.StatusInternalServerError)
+                //http.Error(w, err.Error(), http.StatusInternalServerError)
         return
         }
 
