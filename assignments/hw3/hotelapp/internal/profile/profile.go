@@ -82,7 +82,7 @@ func (s *Profile) GetProfiles(ctx context.Context, req *pb.Request) (*pb.Result,
 
 	var err error
 	res := new(pb.Result)
-	res.hotels, err = s.dbsession.GetProfiles(req.HotelIds)
+	res.Hotels, err = s.dbsession.GetProfiles(req.HotelIds)
 	return res, err
 
 }
