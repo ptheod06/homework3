@@ -114,8 +114,8 @@ func (s *Search) Nearby(ctx context.Context, req *pb.NearbyRequest) (*pb.SearchR
 	// HINT: and modify as needed.
 
 	nearby, err := s.geoClient.GetGeo(ctx, &geo.Request{
- 		lat: req.lat,
-  		lon:   req.lon,
+ 		Lat: req.Lat,
+  		Lon:   req.Lon,
 	})
 	if err != nil {
   		http.Error(w, err.Error(), http.StatusInternalServerError)
@@ -126,9 +126,9 @@ func (s *Search) Nearby(ctx context.Context, req *pb.NearbyRequest) (*pb.SearchR
 	//getRates
 
 	rates, err := s.rateClient.GetRates(ctx, &rates.RateRequest{
-                hotelIds: nearby.hotelIds,
-                inDate:   req.InDate,
-		outDate: req.OutDate,
+                HotelIds: nearby.HotelIds,
+                InDate:   req.InDate,
+		OutDate: req.OutDate,
         })
         if err != nil {
                 http.Error(w, err.Error(), http.StatusInternalServerError)

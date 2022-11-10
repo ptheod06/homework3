@@ -121,8 +121,8 @@ func (s *Frontend) searchHandler(w http.ResponseWriter, r *http.Request) {
 	// TODO: Implement me	
 
 	profileResp, err := s.profileClient.GetProfiles(&profile.Request{
-		hotelIds: searchResp.hotelIds,
-		locale:   locale,
+		HotelIds: searchResp.HotelIds,
+		Locale:   locale,
 	})
 	if err != nil {
 		log.Error("SearchHandler GetProfiles failed")
