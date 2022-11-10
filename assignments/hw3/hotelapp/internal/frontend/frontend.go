@@ -120,7 +120,7 @@ func (s *Frontend) searchHandler(w http.ResponseWriter, r *http.Request) {
 	// hotel profiles
 	// TODO: Implement me	
 
-	profileResp, err := s.profileClient.GetProfiles(&profile.Request{
+	profileResp, err := s.profileClient.GetProfiles(ctx, &profile.Request{
 		HotelIds: searchResp.HotelIds,
 		Locale:   locale,
 	})
