@@ -79,7 +79,7 @@ func inTimeSpan(start, end, check time.Time) bool {
 }
 
 // GetRates gets rates for hotels for specific date range.
-func (s *Rate) GetRates(ctx context.Context, req *pb.Request) (*pb.Result, error) {
+func (s *Rate) GetRates(ctx context.Context, req *pb.RateRequest) (*pb.RateResult, error) {
 	// TODO: Implement me
 	// HINT: Reuse the implementation from the monolithic implementation 
 	// HINT: and modify as needed.
