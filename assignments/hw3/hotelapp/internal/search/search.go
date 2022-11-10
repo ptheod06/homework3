@@ -86,10 +86,25 @@ func (s *Search) Run() error {
 
 func (s *Search) initGeoClient() error {
 	// TODO: Implement me
+
+	conn, err := dialer.Dial(s.geoAddr, s.tracer)
+        if err != nil {
+                return fmt.Errorf("did not connect to profile service: %v", err)
+        }
+        s.geoClient = geo.NewGeoClient(conn)
+        return nil
+
 }
 
 func (s *Search) initRateClient() error {
 	// TODO: Implement me
+
+	conn, err := dialer.Dial(s.rateAddr, s.tracer)
+	if err != nil {
+		return fmt.Errorf("did not connect to profile service: %v", err)
+	}
+	s.rateClient = rate.NewRateClient(conn)
+	return nil
 }
 
 // Nearby returns ids of nearby hotels ordered by ranking algo
@@ -97,4 +112,35 @@ func (s *Search) Nearby(ctx context.Context, req *pb.NearbyRequest) (*pb.SearchR
 	// TODO: Implement me
 	// HINT: Reuse the implementation from the monolithic implementation 
 	// HINT: and modify as needed.
+
+	nearby, err := s.geoClient.GetGeo(ctx, &geo.Request{
+ 		lat: req.lat,
+  		lon:   req.lon,
+	})
+	if err != nil {
+  		http.Error(w, err.Error(), http.StatusInternalServerError)
+  	return
+	}
+
+
+	//getRates
+
+	rates, err := s.rateClient.GetRates(ctx, &rates.RateRequest{
+                hotelIds: nearby.hotelIds,
+                inDate:   req.InDate,
+		outDate: req.OutDate,
+        })
+        if err != nil {
+                http.Error(w, err.Error(), http.StatusInternalServerError)
+        return
+        }
+
+	res := new(pb.SearchResult)
+	for _, ratePlan := range rates.RatePlans {
+		res.HotelIds = append(res.HotelIds, ratePlan.HotelId)
+	}
+
+	return res, nil
+
+
 }
